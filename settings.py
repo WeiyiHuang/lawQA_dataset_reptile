@@ -54,7 +54,7 @@ ROBOTSTXT_OBEY = False
 # See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
    'findlaw.middlewares.UserAgentMiddleware': 543,
-#   'findlaw.middlewares.ProxyMiddleware': 543,
+   'findlaw.middlewares.ProxyMiddleware': 543,
 }
 
 # Enable or disable extensions
@@ -90,5 +90,12 @@ HTTPERROR_ALLOWED_CODES = [404, 503]
 # HTTPCACHE_DIR = 'httpcache'
 # HTTPCACHE_IGNORE_HTTP_CODES = []
 # HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+
+with open('proxy_ip_pool', 'rb') as f:
+    ips = f.read()
+    PROXIES = []
+    ips = ips.split(' ')
+    for ip in ips:
+        PROXIES.append('http://' + ip)
 
 # PROXIES = ['https://154.0.14.246:39431', ]

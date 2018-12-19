@@ -102,14 +102,14 @@ class UserAgentMiddleware(object):
         agent = random.choice(USER_AGENT_LIST)
         request.headers['USER_AGENT'] = agent
 
-# class ProxyMiddleware(object):
-#     def __init__(self, ip):
-#         self.ip = ip
-# 
-#     @classmethod
-#     def from_crawler(cls, crawler):
-#         return cls(ip=crawler.settings.get('PROXIES'))
-# 
-#     def process_request(self, request, spider):
-#         ip = random.choice(self.ip)
-#         request.meta['proxy'] = ip
+class ProxyMiddleware(object):
+    def __init__(self, ip):
+        self.ip = ip
+
+    @classmethod
+    def from_crawler(cls, crawler):
+        return cls(ip=crawler.settings.get('PROXIES'))
+
+    def process_request(self, request, spider):
+        ip = random.choice(self.ip)
+        request.meta['proxy'] = ip
