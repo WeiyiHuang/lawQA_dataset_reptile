@@ -56,7 +56,7 @@ class FindlawSpiderMiddleware(object):
     def spider_opened(self, spider):
         spider.logger.info('Spider opened: %s' % spider.name)
 
-class my_useragent(object):
+class UserAgentMiddleware(object):
     def process_request(self, request, spider):
         USER_AGENT_LIST = [
             'MSIE (MSIE 6.0; X11; Linux; i686) Opera 7.23',
@@ -102,14 +102,14 @@ class my_useragent(object):
         agent = random.choice(USER_AGENT_LIST)
         request.headers['USER_AGENT'] = agent
 
-#class ProxyMiddleware(object):
-#    def __init__(self, ip):
-#        self.ip = ip
-#
-#    @classmethod
-#    def from_crawler(cls, crawler):
-#        return cls(ip=crawler.settings.get('PROXIES'))
-#
-#    def process_request(self, request, spider):
-#        ip = random.choice(self.ip)
-#        request.meta['proxy'] = ip
+# class ProxyMiddleware(object):
+#     def __init__(self, ip):
+#         self.ip = ip
+# 
+#     @classmethod
+#     def from_crawler(cls, crawler):
+#         return cls(ip=crawler.settings.get('PROXIES'))
+# 
+#     def process_request(self, request, spider):
+#         ip = random.choice(self.ip)
+#         request.meta['proxy'] = ip
