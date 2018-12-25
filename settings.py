@@ -9,10 +9,10 @@
 #     http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 #     http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = 'findlaw'
+BOT_NAME = 'lawQA_dataset_reptile'
 
-SPIDER_MODULES = ['findlaw.spiders']
-NEWSPIDER_MODULE = 'findlaw.spiders'
+SPIDER_MODULES = ['spiders']
+NEWSPIDER_MODULE = 'spiders'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
@@ -53,8 +53,8 @@ ROBOTSTXT_OBEY = False
 # Enable or disable downloader middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
-   'findlaw.middlewares.UserAgentMiddleware': 543,
-   'findlaw.middlewares.ProxyMiddleware': 543,
+   'middlewares.UserAgentMiddleware': 543,
+   'middlewares.ProxyMiddleware': 543,
 }
 
 # Enable or disable extensions
@@ -92,7 +92,7 @@ HTTPERROR_ALLOWED_CODES = [404, 503]
 # HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
 with open('proxy_ip_pool', 'rb') as f:
-    ips = f.read()
+    ips = f.read().decode()
     PROXIES = []
     ips = ips.split(' ')
     for ip in ips:

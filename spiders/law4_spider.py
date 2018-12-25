@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import scrapy
-from findlaw.items import FindlawItem
+from items import FindlawItem
 
 
 class Law4SpiderSpider(scrapy.Spider):
