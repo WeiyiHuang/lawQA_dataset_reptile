@@ -7,9 +7,11 @@ class LawSpiderSpider(scrapy.Spider):
     name = "law_spider"
     allowed_domains = ["www.110.com"]
     start_urls = []
-    for i in range(1,101):
-        url = 'http://www.110.com/ask/browse-p%ds2c0r0.html' % (i)
-        start_urls.append(url)
+    for j in range(1, 70):
+        for i in range(1,101):
+            # p - page, s - answered, c -category(0: all, 1-70:category), r - unknown
+            url = 'http://www.110.com/ask/browse-p%ds2c%dr0.html' % (i, j)
+            start_urls.append(url)
 
 
     def parse(self, response):
@@ -27,8 +29,11 @@ class LawSpiderSpider(scrapy.Spider):
         content_list = response.xpath("//div[@class='zjdanr']/text()").extract()
         content = "".join(content_list)
         lawitem['answer'] = content
-        content_list1 = response.xpath("//div[@class='xwz']/text()").extract()
+        content_list1 = response.xpath("//div[@class='wenz']//h1/text()").extract()
         content1 = "".join(content_list1)
+        content_list1 = response.xpath("//div[@class='xwz']/text()").extract()
+        content1 += "###"
+        content1 += "".join(content_list1)
         lawitem['question'] = content1
         yield lawitem
 
