@@ -26,15 +26,35 @@ class LawSpiderSpider(scrapy.Spider):
 
     def parse_page(self, response):
         lawitem = FindlawItem()
-        content_list = response.xpath("//div[@class='zjdanr']/text()").extract()
-        content = "".join(content_list)
-        lawitem['answer'] = content
         content_list1 = response.xpath("//div[@class='wenz']//h1/text()").extract()
         content1 = "".join(content_list1)
         content_list1 = response.xpath("//div[@class='xwz']/text()").extract()
-        content1 += "###"
+        content1 += "|||"
         content1 += "".join(content_list1)
         lawitem['question'] = content1
+        content_list = response.xpath("/html/body/div[@class='main']/div[@class='left']/div[@class='leftbox02 bjing1']/div[@class='zjright']/div[@class='zjdanr']/text()").extract()
+        content = "".join(content_list)
+        lawitem['best_answer'] = content
+        content_list = response.xpath("/html/body/div[@class='main']/div[@class='left']/div[@class='leftbox02 bjing1']/div[@class='zjdaz']/div[@class='zjda']/ul/li[2]/a/@href").extract()
+        content = "".join(content_list)
+        lawitem['best_answer_lawyer'] = content
+        ls = response.xpath("/html/body/div[@class='main']/div[@class='left']/div[@class='leftbox02 bjing2']/div[@class='zjdaz']/div[@class='zjda']")
+        length = len(ls)
+        lawitem['other_answer_num'] = length
+        content_ls = []
+        for i in range(length):
+            idx = (i + 1) * 4
+            content_list = response.xpath("/html/body/div[@class='main']/div[@class='left']/div[@class='leftbox02 bjing2']/div[%d]/div[2]/text()" % idx).extract()
+            tmp = "".join(content_list)
+            content_ls.append(tmp)
+        content = "|||".join(content_ls)
+        lawitem['other_answer'] = content
+        content_list = response.xpath("/html/body/div[@class='main']/div[@class='left']/div[@class='leftbox02 bjing2']/div[@class='zjdaz']/div[@class='zjda']/ul/li[2]/a/@href").extract()
+        content = "|||".join(content_list)
+        lawitem['other_answer_lawyer'] = content
+        content_list = response.xpath("/html/body/div[@class='showpath']/span[@class='lshowpath']/a/text()").extract()
+        content = "|||".join(content_list)
+        lawitem['category'] = content
         yield lawitem
 
 
